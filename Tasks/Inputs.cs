@@ -31,14 +31,23 @@ public class Inputs()
 
     public async SyncTask<bool> Logout()
     {
-        ReleaseHeldKeys(); 
+        ReleaseHeldKeys();
         await SendKey(Instance.Settings.LogoutKey.Value.Key);
         return true;
     }
 
+    public async SyncTask<bool> SendEnter()
+    {
+        ReleaseHeldKeys();
+        await SendKey(Keys.Enter);
+        await Task.Delay(1000);
+        return true;
+    }
+
+
     public async SyncTask<bool> TeleportToHideout()
     {
-        ReleaseHeldKeys(); 
+        ReleaseHeldKeys();
         await SendKey(Instance.Settings.HideoutKey.Value.Key);
         return true;
     }
@@ -46,7 +55,7 @@ public class Inputs()
 
     public async SyncTask<bool> ClickOnPosition(Vector2 pos, CancellationToken token)
     {
-        ReleaseHeldKeys(); 
+        ReleaseHeldKeys();
 
         await Task.Delay(DownUpDelay, token);
         Input.SetCursorPos(pos);

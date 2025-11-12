@@ -73,7 +73,7 @@ public class Scheduler()
             _cancellationTokenSource = null;
         }
 
-        if (_tasks.Any())
+        if (_tasks.Count != 0)
         {
             Instance.LogMessage($"Clearing {_tasks.Count} scheduled tasks.");
             _tasks.Clear();

@@ -14,6 +14,7 @@ public class Automate : BaseSettingsPlugin<AutomateSettings>
     public LoadingScreen LoadingScreen;
     public Hideout Hideout;
     public Stash Stash;
+    public Login Login;
     public Action StartStashie;
     public Func<bool> StashieIsActive;
     public Action StartMyLittleCrafter;
@@ -28,6 +29,7 @@ public class Automate : BaseSettingsPlugin<AutomateSettings>
         LoadingScreen = new();
         Hideout = new();
         Stash = new();
+        Login = new();
 
         StartStashie = GameController.PluginBridge.GetMethod<Action>("Stashie.Start");
         if (StartStashie == null)
@@ -52,8 +54,9 @@ public class Automate : BaseSettingsPlugin<AutomateSettings>
 
     public override Job Tick()
     {
-        LoadingScreen.Tick();
         Hideout.Tick();
+        LoadingScreen.Tick();
+        Login.Tick();
         Scheduler.Run();
         return null;
     }
@@ -62,7 +65,7 @@ public class Automate : BaseSettingsPlugin<AutomateSettings>
     {
         if (!GameController.Window.IsForeground())
             return;
-            
+
         var hoverElement = GameController.IngameState.UIHoverElement;
         Graphics.DrawTextWithBackground($"Hover Type: {hoverElement.Type}", new System.Numerics.Vector2(1300, 300), Color.White, Color.Black);
     }
