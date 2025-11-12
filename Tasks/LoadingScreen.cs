@@ -8,7 +8,7 @@ public class LoadingScreen()
     private static readonly Automate Instance = Automate.Instance;
     private Stopwatch _loadingTimer = new();
     private bool _logoutInitiated = false;
-    private bool _wasLoading = false; // To detect the start of a loading screen
+    private bool _wasLoading = false;
 
     private static TimeSpan Timeout => TimeSpan.FromSeconds(Instance.Settings.LoadingTimeout.Value);
     private bool TimeoutReached => _loadingTimer.Elapsed >= Timeout;
@@ -37,8 +37,6 @@ public class LoadingScreen()
             if (TimeoutReached)
             {
                 _logoutInitiated = true;
-                // We pass a lambda because ForceAddTask now expects a task factory.
-                // This specific task is short, so it doesn't need the token itself.
                 Instance.Scheduler.ForceAddTask(_ => Instance.Inputs.Logout(), "Logout");
             }
         }

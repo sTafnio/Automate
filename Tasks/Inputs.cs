@@ -29,28 +29,25 @@ public class Inputs()
 
     private int DownUpDelay => _random.Next(25, 65);
 
-    // This task is NOT cancellable by design. It does not accept a token.
     public async SyncTask<bool> Logout()
     {
-        ReleaseHeldKeys(); // Calls the synchronous version
+        ReleaseHeldKeys(); 
         await SendKey(Instance.Settings.LogoutKey.Value.Key);
         return true;
     }
 
-    // This task is also NOT cancellable by design.
     public async SyncTask<bool> TeleportToHideout()
     {
-        ReleaseHeldKeys(); // Calls the synchronous version
+        ReleaseHeldKeys(); 
         await SendKey(Instance.Settings.HideoutKey.Value.Key);
         return true;
     }
 
-    // This task REMAINS cancellable because it involves multiple steps.
+
     public async SyncTask<bool> ClickOnPosition(Vector2 pos, CancellationToken token)
     {
-        ReleaseHeldKeys(); // This synchronous method will run to completion quickly.
+        ReleaseHeldKeys(); 
 
-        // The rest of the method respects the cancellation token.
         await Task.Delay(DownUpDelay, token);
         Input.SetCursorPos(pos);
         await Task.Delay(DownUpDelay, token);
@@ -58,8 +55,6 @@ public class Inputs()
         return true;
     }
 
-    // This is a private helper. We can have it either way, but for consistency,
-    // let's make it non-cancellable as it's only used by Logout/Teleport.
     private async SyncTask<bool> SendKey(Keys key)
     {
         Input.KeyDown(key);
@@ -70,7 +65,6 @@ public class Inputs()
         return true;
     }
 
-    // This method is synchronous (void) as you designed.
     private void ReleaseHeldKeys()
     {
         var heldKeys = _keysToRelease.Where(Input.IsKeyDown);

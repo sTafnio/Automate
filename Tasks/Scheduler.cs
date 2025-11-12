@@ -10,14 +10,9 @@ public class Scheduler()
 {
     private static readonly Automate Instance = Automate.Instance;
     private (SyncTask<bool> Task, string Name) _currentTaskInfo;
-
-    // Store task factories (a function that creates a task) instead of started tasks.
     private Queue<(Func<CancellationToken, SyncTask<bool>> TaskFactory, string Name)> _tasks = new();
-
-    // The source that will generate the cancellation token for the running task.
     private CancellationTokenSource _cancellationTokenSource;
 
-    // Change the parameter to be a factory function that accepts a CancellationToken.
     public void AddTask(Func<CancellationToken, SyncTask<bool>> taskFactory, string name)
     {
         if (name != null)
@@ -51,7 +46,6 @@ public class Scheduler()
             // Create a new CancellationTokenSource for the new task.
             _cancellationTokenSource = new CancellationTokenSource();
 
-            // Create and start the task by invoking the factory with the new token.
             var task = taskFactory(_cancellationTokenSource.Token);
             _currentTaskInfo = (task, name);
 
@@ -69,12 +63,8 @@ public class Scheduler()
         }
     }
 
-    /// <summary>
-    /// Cancels the current task and clears all scheduled tasks.
-    /// </summary>
     public void CancelAllTasks()
     {
-        // Signal cancellation to the running task.
         if (_cancellationTokenSource != null && !_cancellationTokenSource.IsCancellationRequested)
         {
             Instance.LogMessage($"Cancelling current task: {_currentTaskInfo.Name}");
@@ -83,7 +73,6 @@ public class Scheduler()
             _cancellationTokenSource = null;
         }
 
-        // Clear any tasks that haven't started yet.
         if (_tasks.Any())
         {
             Instance.LogMessage($"Clearing {_tasks.Count} scheduled tasks.");
@@ -93,7 +82,6 @@ public class Scheduler()
         _currentTaskInfo = default;
     }
 
-    // The old Stop and Clear methods are effectively replaced by CancelAllTasks.
     public void Stop()
     {
         CancelAllTasks();

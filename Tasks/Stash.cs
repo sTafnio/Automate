@@ -16,10 +16,6 @@ public class Stash()
     private bool IsStashOpen => Instance.GameController.IngameState.IngameUi.StashElement.IsVisible == true;
     private bool IsStashieActive => Instance.StashieIsActive.Invoke();
 
-    /// <summary>
-    /// Performs a single attempt to click on the stash.
-    /// Renamed from OpenStash for clarity.
-    /// </summary>
     public async SyncTask<bool> OpenStash(CancellationToken token)
     {
         await Task.Delay(2000, token);
@@ -29,7 +25,6 @@ public class Stash()
         var winRectLoc = Instance.GameController.Window.GetWindowRectangleTimeCache.Location.ToVector2Num();
         var clickPos = new Vector2(stashScreenPos.X + winRectLoc.X, stashScreenPos.Y + winRectLoc.Y);
 
-        // Click on the calculated position.
         await Instance.Inputs.ClickOnPosition(clickPos, token);
 
         return true;

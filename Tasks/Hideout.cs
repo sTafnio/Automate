@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using ExileCore.PoEMemory;
 
 namespace Automate.Tasks;
@@ -26,9 +25,6 @@ public class Hideout()
         if (InOwnHideout && !_wasInOwnHideout && (Instance.Settings.MyLittleCrafter || Instance.Settings.Stashie))
         {
             Instance.LogMessage("Entered own hideout. Scheduling OpenStash task.");
-
-            // To add a CANCELLABLE task, pass the token to your method.
-            // Signature: token => Method(token)
             Instance.Scheduler.AddTask(Instance.Stash.OpenStash, "Open Stash");
 
             if (Instance.Settings.Stashie)
@@ -54,9 +50,6 @@ public class Hideout()
             if (TimeoutReached)
             {
                 _teleportInitiated = true;
-
-                // To add a NON-CANCELLABLE task, ignore the token with `_`.
-                // Signature: _ => Method()
                 Instance.Scheduler.ForceAddTask(_ => Instance.Inputs.TeleportToHideout(), "Teleport to Hideout");
             }
         }
