@@ -1,6 +1,6 @@
 using System;
 using System.Diagnostics;
-using ExileCore.PoEMemory;
+using ExileCore2.PoEMemory;
 
 namespace Automate.Tasks;
 
@@ -13,7 +13,7 @@ public class Hideout()
 
     private static TimeSpan Timeout => TimeSpan.FromSeconds(Instance.Settings.OtherHideoutTimeout.Value);
     private bool TimeoutReached => _otherHideoutTimer.Elapsed >= Timeout;
-    private static Element LeaveHideoutButton => Instance.GameController.IngameState.IngameUi.LeagueMechanicButtons.GetChildAtIndex(2);
+    private static Element LeaveHideoutButton => Instance.GameController.IngameState.UIRoot.GetChildFromIndices(1, 112, 9, 13, 2);
     private bool InHideout => Instance.GameController.Area.CurrentArea.IsHideout;
     private bool LeaveHideoutButtonVisible => LeaveHideoutButton != null && LeaveHideoutButton.IsVisibleLocal;
     private bool InOwnHideout => InHideout && !LeaveHideoutButtonVisible;
@@ -59,7 +59,7 @@ public class Hideout()
     {
         if (LeaveHideoutButton == null)
         {
-            Instance.LogError("Leave Hideout Button not found - Might have moved from 'IngameUi.LeagueMechanicButtons.GetChildAtIndex(2)'");
+            Instance.LogError("Leave Hideout Button not found - Might have moved from 'Instance.GameController.IngameState.UIRoot.GetChildFromIndices(1, 112, 9, 13, 2)");
             return;
         }
 

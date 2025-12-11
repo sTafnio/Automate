@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using ExileCore.Shared;
+using ExileCore2.Shared;
 
 namespace Automate.Tasks;
 

@@ -1,8 +1,8 @@
 using System;
 using System.Windows.Forms;
-using ExileCore.Shared;
+using ExileCore2.Shared;
 using System.Threading.Tasks;
-using ExileCore;
+using ExileCore2;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;

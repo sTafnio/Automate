@@ -1,10 +1,9 @@
 using System.Linq;
 using System.Numerics;
 using System.Threading;
-using ExileCore.PoEMemory.MemoryObjects;
-using ExileCore.Shared;
-using ExileCore.Shared.Enums;
-using ExileCore.Shared.Helpers;
+using ExileCore2.PoEMemory.MemoryObjects;
+using ExileCore2.Shared;
+using ExileCore2.Shared.Enums;
 using System.Threading.Tasks;
 
 namespace Automate.Tasks;
@@ -20,9 +19,9 @@ public class Stash()
     {
         await Task.Delay(2000, token);
 
-        var stashWorldPos = StashElement.BoundsCenterPosNum;
+        var stashWorldPos = StashElement.BoundsCenterPos;
         var stashScreenPos = Instance.GameController.Game.IngameState.Camera.WorldToScreen(stashWorldPos);
-        var winRectLoc = Instance.GameController.Window.GetWindowRectangleTimeCache.Location.ToVector2Num();
+        var winRectLoc = Instance.GameController.Window.GetWindowRectangleTimeCache.Location;
         var clickPos = new Vector2(stashScreenPos.X + winRectLoc.X, stashScreenPos.Y + winRectLoc.Y);
 
         await Instance.Inputs.ClickOnPosition(clickPos, token);

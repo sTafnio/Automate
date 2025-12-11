@@ -15,7 +15,7 @@ public class LoadingScreen()
 
     public void Tick()
     {
-        bool isLoading = Instance.GameController.IngameState.TheGame.IsLoading;
+        bool isLoading = Instance.GameController.Game.IsLoading;
 
         // When the loading screen FIRST appears, cancel everything.
         if (isLoading && !_wasLoading)

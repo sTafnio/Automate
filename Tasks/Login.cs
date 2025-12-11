@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using ExileCore.Shared;
+using ExileCore2.Shared;
 
 namespace Automate.Tasks;
 
@@ -8,7 +8,7 @@ public class Login()
     private static readonly Automate Instance = Automate.Instance;
     private bool _loggedIn = false;
 
-    private bool NeedLogin => !Instance.GameController.Game.IsInGameState;
+    private bool NeedLogin => Instance.GameController.Game.IsInGameState == false;
 
     public void Tick()
     {

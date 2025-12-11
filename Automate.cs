@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Numerics;
+using System.Drawing;
 using Automate.Tasks;
-using ExileCore;
-using SharpDX;
+using ExileCore2;
 
 namespace Automate;
 
@@ -52,13 +51,13 @@ public class Automate : BaseSettingsPlugin<AutomateSettings>
         Hideout.OnAreaChange();
     }
 
-    public override Job Tick()
+    public override void Tick()
     {
         Hideout.Tick();
         LoadingScreen.Tick();
         Login.Tick();
         Scheduler.Run();
-        return null;
+        return;
     }
 
     public override void Render()
